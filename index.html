@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BLANK STORE — Catálogo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ── BG ORBS ── -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════ -->
+    <nav class="nav">
+      
+      <a href="#" class="nav-logo"> BLANK<span>&bull;</span>STORE </a>
+      <div class="gender-switch">
+        <button onclick="setTheme('woman')" class="switch-btn active" id="btn-woman">Ella</button>
+        <button onclick="setTheme('man')" class="switch-btn" id="btn-man">Él</button>
+      </div>
+      <div class="nav-right">
+        <div class="nav-search">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar productos..."
+          />
+        </div>
+        <button class="cart-btn" onclick="toggleCart()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span class="cart-text">Mi Pedido</span>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-line"></div>
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Catálogo en línea · Envío por WhatsApp
+      </div>
+      <h1 class="hero-title">Escoge tus<br /><em>favoritos</em></h1>
+      <!--<p class="hero-sub" id="heroSub">
+        Selecciona los productos que deseas, agrégalos a tu pedido y envíanoslo
+        por WhatsApp al instante.
+      </p>-->
+    </section>
+
+    <!-- ══════════════════════════════════════════
+     FILTERS
+══════════════════════════════════════════ -->
+    <div class="filter-section" id="filterSection">
+      <span class="filter-label">Filtrar</span>
+      <button
+        class="filter-btn active"
+        data-cat="all"
+        onclick="filterProducts('all')"
+      >
+        Todo
+      </button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PRODUCTS
+══════════════════════════════════════════ -->
+    <section class="products-section">
+      <div class="products-grid" id="productsGrid">
+        <div class="loader">
+          <div class="loader-ring"></div>
+          <p>Cargando catálogo...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+    <footer class="footer">
+      <span class="footer-logo">BLANK STORE</span>
+      <span>Pide fácil, recibe rápido <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M12 8.5V7.486m0 .264c0-2.9 2.35-5.25 5.25-5.25s5.25 2.382 5.25 5.282c0 1.56-.687 3.055-1.88 4.062l-5.657 4.776A8.35 8.35 0 0 0 12 23a8.35 8.35 0 0 0-2.963-6.38L3.38 11.844A5.33 5.33 0 0 1 1.5 7.782c0-2.9 2.35-5.282 5.25-5.282S12 4.85 12 7.75Z"/></svg></span>
+      <span>Pagos y entregas coordinadas por <a href="#">WhatsApp</a></span>
+    </footer>
+
+    <!-- ══════════════════════════════════════════
+     CART DRAWER
+══════════════════════════════════════════ -->
+    <div
+      class="drawer-backdrop"
+      id="drawerBackdrop"
+      onclick="toggleCart()"
+    ></div>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-header">
+        <div>
+          <span class="drawer-title">Tu Pedido</span>
+          <span class="drawer-count" id="drawerCount"></span>
+        </div>
+        <button class="close-btn" onclick="toggleCart()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-items" id="drawerItems"></div>
+      <div class="drawer-footer">
+        <div class="total-row">
+          <span class="total-label">Total estimado</span>
+          <span class="total-amount" id="totalAmount">$0</span>
+        </div>
+        <textarea
+          class="note-field"
+          id="orderNote"
+          placeholder="¿Alguna nota especial? (Ej: dirección, horario preferido de entrega...)"
+        ></textarea>
+        <a class="whatsapp-btn" id="whatsappBtn" href="#" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            />
+          </svg>
+          Enviar Pedido por WhatsApp
+        </a>
+        <button class="clear-btn" onclick="clearCart()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/></svg>
+          Vaciar pedido
+        </button>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════════
+     PRODUCT MODAL
+══════════════════════════════════════════ -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+      <div class="modal" id="modal">
+        <div id="modalImg" class="modal-img"></div>
+        <div class="modal-body">
+          <div class="modal-category" id="modalCat"></div>
+          <h2 class="modal-name" id="modalName"></h2>
+          <p class="modal-desc" id="modalDesc"></p>
+          <div class="modal-price-row">
+            <span class="modal-price" id="modalPrice"></span>
+            <button
+              class="modal-add-btn"
+              id="modalAddBtn"
+              onclick="modalAddToCart()"
+            >
+              + Agregar al pedido
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TOASTS ── -->
+    <div class="toasts" id="toasts"></div>
+
+    <!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+    <script src="script.js"></script>
+  </body>
+</html>

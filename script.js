@@ -542,6 +542,9 @@ function loadSavedTheme() {
   setTheme(saved);
 }
 
-// Llamamos a la carga del tema dentro de tu función init() existente
-// O simplemente al final del archivo:
-loadSavedTheme();
+// Aseguramos que el código corra cuando el HTML esté listo
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("selectedTheme") || "woman";
+  // Forzamos el seteo sin mostrar el Toast al inicio para no molestar al usuario
+  setTheme(saved); 
+});
